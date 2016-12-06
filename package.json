@@ -1,0 +1,20 @@
+{
+  "name": "canvas-context-trasnfer-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:Ragg-/canvas-context-trasnfer-example.git",
+    "type": "git"
+  },
+  "scripts": {
+    "dev": "$(npm bin)/webpack --config webpack.config.js --watch"
+  },
+  "author": "Ragg <Ragg-@users.noreply.github.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-latest": "^6.16.0",
+    "webpack": "v2.1.0-beta.27"
+  }
+}
