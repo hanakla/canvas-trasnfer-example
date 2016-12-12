@@ -92,9 +92,6 @@ window.addEventListener('DOMContentLoaded', async e => {
     const animateMultiThread = async () => {
         const counter = new FPSCounter
 
-        // const blur = new WorkerBlurFilter
-        // const highpass = new WorkerHighpassFilter
-
         const buffer = document.createElement('canvas')
         buffer.width = distCanvas.width
         buffer.height = distCanvas.height
