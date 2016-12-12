@@ -28,7 +28,7 @@ new class WorkerProcess {
 
   async _preload()
   {
-    const imageBlob = await loadAsBlob('src/images/example.png')
+    const imageBlob = await loadAsBlob('./src/images/example.png')
     this.sourceImage = await createImageBitmap(imageBlob)
   }
 
