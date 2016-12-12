@@ -9,8 +9,8 @@ module.exports = {
     },
     entry: {
         main: ['babel-polyfill', './main.js'],
-        'main-summary': ['babel-polyfill', './main-summary.js'],
-        'worker-summary': ['babel-polyfill', './worker-summary.js'],
+        'main-summary': ['babel-polyfill', './docs/main-summary.js'],
+        'worker-summary': ['babel-polyfill', './docs/worker-summary.js'],
         worker: ['babel-polyfill', './worker.js'],
     },
     output: {

@@ -1,4 +1,4 @@
-import FPSCounter from './utils/fps-counter'
+import FPSCounter from '../utils/fps-counter'
 
 window.addEventListener('DOMContentLoaded', async e => {
   const worker = new Worker('./dist/worker-summary.js')
