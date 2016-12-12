@@ -1,5 +1,10 @@
 {
     "presets": [
+        "stage-2",
+        "stage-3",
         ["latest", {"modules": false}]
+    ],
+    "plugins": [
+      "transform-class-properties"
     ]
 }

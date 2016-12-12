@@ -43,12 +43,12 @@ window.addEventListener('DOMContentLoaded', async e => {
     ctx.font = '24px/1 sans-serif'
     ctx.textBaseline = 'top'
 
-    // const worker = new Worker('./dist/worker.js')
-    // const awaitResponse = () => new Promise(resolve => {
-    //     worker.addEventListener('message', ({data}) => {
-    //         data.action === 'resolve' && resolve(data)
-    //     }, {once: true})
-    // })
+    const worker = new Worker('./dist/worker.js')
+    const awaitResponse = () => new Promise(resolve => {
+        worker.addEventListener('message', ({data}) => {
+            data.action === 'resolve' && resolve(data)
+        }, {once: true})
+    })
 
     const imageBlob = await (await fetch('./src/images/example.png')).blob()
     const image = await createImageBitmap(imageBlob)
@@ -92,8 +92,8 @@ window.addEventListener('DOMContentLoaded', async e => {
     const animateMultiThread = async () => {
         const counter = new FPSCounter
 
-        const blur = new WorkerBlurFilter
-        const highpass = new WorkerHighpassFilter
+        // const blur = new WorkerBlurFilter
+        // const highpass = new WorkerHighpassFilter
 
         const buffer = document.createElement('canvas')
         buffer.width = distCanvas.width
@@ -101,7 +101,7 @@ window.addEventListener('DOMContentLoaded', async e => {
         document.body.appendChild(buffer)
 
         const offscreen = buffer.transferControlToOffscreen()
-
+        // worker.postMessage({action: 'attach-canvas', canvas: offscreen}, [offscreen])
         worker.postMessage({action: 'attach-canvas', canvas: offscreen}, [offscreen])
         await awaitResponse()
 
@@ -111,26 +111,24 @@ window.addEventListener('DOMContentLoaded', async e => {
         const animate = async () => {
             counter.count()
 
-            const {width, height} = canvas
-            ctx.clearRect(0, 0, 640, 360)
-            ctx.drawImage(image, 0, 0)
-
-            // worker.postMessage({action: 'render'})
-            // const {image: imageBitmap} = await awaitResponse()
-            //
+            // const {width, height} = canvas
             // ctx.clearRect(0, 0, 640, 360)
-            //
-            // ctx.drawImage(imageBitmap, 0, 0)
-            //
-            // ctx.fillText(`fps: ${counter.fps}`, 0, 0)
-            // requestAnimationFrame(animate)
+            // ctx.drawImage(image, 0, 0)
+
+            worker.postMessage({action: 'render'})
+            await awaitResponse()
+
+            ctx.clearRect(0, 0, 640, 360)
+            ctx.drawImage(buffer, 0, 0)
+            ctx.fillText(`fps: ${counter.fps}`, 0, 0)
+            requestAnimationFrame(animate)
             // // imageBitmap.close()
         }
 
         requestAnimationFrame(animate)
     }
 
-    animateSigleThread()
-    // animateMultiThread()
+    // animateSigleThread()
+    animateMultiThread()
     console.log('init');
 })

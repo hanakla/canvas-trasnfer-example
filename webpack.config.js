@@ -9,6 +9,8 @@ module.exports = {
     },
     entry: {
         main: ['babel-polyfill', './main.js'],
+        'main-summary': ['babel-polyfill', './main-summary.js'],
+        'worker-summary': ['babel-polyfill', './worker-summary.js'],
         worker: ['babel-polyfill', './worker.js'],
     },
     output: {
@@ -26,9 +28,13 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     presets: [
+                        'stage-2',
                         'stage-3',
                         ['latest', {modules: false}]
-                    ]
+                    ],
+                    'plugins': [
+                      'transform-class-properties',
+                    ],
                 },
             },
         ],

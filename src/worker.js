@@ -4,6 +4,8 @@ import StackBlur from 'stackblur-canvas'
 
 import blur from './filters/blur'
 import highpass from './filters/highpass'
+import lowpass from './filters/highpass'
+import Filters from 'canvasfilters'
 
 (async () => {
     let canvas
@@ -27,19 +29,24 @@ import highpass from './filters/highpass'
         async render()
         {
             // console.log(self);
-            console.log(__filename);
+            // console.log(__filename);
             const {width, height} = canvas
             ctx.clearRect(0, 0, width, height)
             ctx.drawImage(srcImage, 0, 0)
-
             const srcImageBuffer = ctx.getImageData(0, 0, width, height)
-            const imageBlurred = blur(srcImageBuffer, 10)
-            const imageHighPass = highpass(srcImageBuffer, 200)
 
-            const bitmap = canvas.transferToImageBitmap()
+            const imageBlurred = blur(srcImageBuffer, 10)
+            const imageLowPass = blur(highpass(srcImageBuffer, 230), 80)
+            const destinate = Filters.screenBlend(
+                Filters.multiplyBlend(srcImageBuffer, imageBlurred),
+                imageLowPass,
+            )
+
+            ctx.putImageData(new ImageData(new Uint8ClampedArray(destinate.data.buffer), destinate.width, destinate.height), 0, 0)
+            ctx.commit()
             return [
-                {image: bitmap},
-                [bitmap]
+                // {image: bitmap},
+                // [bitmap]
             ]
         }
     }
