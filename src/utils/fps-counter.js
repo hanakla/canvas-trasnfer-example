@@ -20,12 +20,6 @@ export default class FPSCounter
             this.lastCountTime = now
 
             console.log('%dfps', this.fps);
-
-            if (this.logs.length >= 5 + 1) {
-                const logs = this.logs.slice(1)
-                console.log(logs, logs.reduce((m, value) => m + value, 0) / logs.length);
-                throw new Error('count stop')
-            }
         }
     }
 }

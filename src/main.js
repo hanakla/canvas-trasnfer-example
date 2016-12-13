@@ -25,7 +25,11 @@ window.addEventListener('DOMContentLoaded', async e => {
 
     const waitResponse = () => new Promise(resolve => {
         worker.addEventListener('message', ({data}) => {
-            data.action === 'resolve' && resolve(data)
+            if (data.action === 'resolve') {
+              resolve(data)
+            } else if (data.action === 'error') {
+              alert(data.message)
+            }
         }, {once: true})
     })
 
@@ -34,10 +38,10 @@ window.addEventListener('DOMContentLoaded', async e => {
     await waitResponse()
 
     const render = async () => {
-      counter.count()
+        counter.count()
 
-      worker.postMessage({action: 'render'})
-      await waitResponse()
+        worker.postMessage({action: 'render'})
+        await waitResponse()
 
       requestAnimationFrame(render)
     }
