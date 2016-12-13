@@ -9260,7 +9260,9 @@ window.addEventListener('DOMContentLoaded', function () {
                 worker.addEventListener('message', function (_ref2) {
                   var data = _ref2.data;
 
-                  data.action === 'resolve' && resolve(data);
+                  if (data && data.action === 'resolve') {
+                    resolve(data);
+                  }
                 }, { once: true });
               });
             };

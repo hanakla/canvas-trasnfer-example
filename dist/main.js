@@ -10892,7 +10892,7 @@ var NormalProcess = function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return (0, _loadAsBlob2.default)('/src/images/example.png');
+                return (0, _loadAsBlob2.default)('./src/images/example.png');
 
               case 2:
                 imageBlob = _context.sent;
