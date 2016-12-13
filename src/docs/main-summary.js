@@ -5,9 +5,11 @@ window.addEventListener('DOMContentLoaded', async e => {
 
   // Workerの処理完了を待つためのヘルパ
   const waitResponse = () => new Promise(resolve => {
-      worker.addEventListener('message', ({data}) => {
-          data.action === 'resolve' && resolve(data)
-      }, {once: true})
+    worker.addEventListener('message', ({data}) => {
+      if (data && data.action === 'resolve') {
+        resolve(data)
+      }
+    }, {once: true})
   })
 
   const dest = document.createElement('canvas')
