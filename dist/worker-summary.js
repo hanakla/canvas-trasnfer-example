@@ -10738,7 +10738,7 @@ new (function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return (0, _loadAsBlob2.default)('./src/images/example.png');
+                return (0, _loadAsBlob2.default)('../src/images/example.png');
 
               case 2:
                 imageBlob = _context2.sent;
