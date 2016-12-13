@@ -10672,165 +10672,165 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 new (function () {
-  function WorkerProcess() {
-    _classCallCheck(this, WorkerProcess);
+    function WorkerProcess() {
+        _classCallCheck(this, WorkerProcess);
 
-    this.handleMessage();
-  }
-
-  _createClass(WorkerProcess, [{
-    key: 'handleMessage',
-    value: function handleMessage() {
-      var _this = this;
-
-      self.onmessage = function () {
-        var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(_ref2) {
-          var _ref2$data = _ref2.data,
-              action = _ref2$data.action,
-              props = _objectWithoutProperties(_ref2$data, ['action']);
-
-          return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  _context.t0 = action;
-                  _context.next = _context.t0 === 'attachCanvas' ? 3 : _context.t0 === 'render' ? 6 : 9;
-                  break;
-
-                case 3:
-                  _context.next = 5;
-                  return _this.attachCanvas(props);
-
-                case 5:
-                  return _context.abrupt('break', 9);
-
-                case 6:
-                  _context.next = 8;
-                  return _this.render();
-
-                case 8:
-                  return _context.abrupt('break', 9);
-
-                case 9:
-
-                  self.postMessage({ action: 'resolve' });
-
-                case 10:
-                case 'end':
-                  return _context.stop();
-              }
-            }
-          }, _callee, _this);
-        }));
-
-        return function (_x) {
-          return _ref.apply(this, arguments);
-        };
-      }();
+        this.handleMessage();
     }
-  }, {
-    key: '_preload',
-    value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
-        var imageBlob;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return (0, _loadAsBlob2.default)('../src/images/example.png');
 
-              case 2:
-                imageBlob = _context2.sent;
-                _context2.next = 5;
-                return createImageBitmap(imageBlob);
+    _createClass(WorkerProcess, [{
+        key: 'handleMessage',
+        value: function handleMessage() {
+            var _this = this;
 
-              case 5:
-                this.sourceImage = _context2.sent;
+            self.onmessage = function () {
+                var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(_ref2) {
+                    var _ref2$data = _ref2.data,
+                        action = _ref2$data.action,
+                        props = _objectWithoutProperties(_ref2$data, ['action']);
 
-              case 6:
-              case 'end':
-                return _context2.stop();
+                    return regeneratorRuntime.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    _context.t0 = action;
+                                    _context.next = _context.t0 === 'attachCanvas' ? 3 : _context.t0 === 'render' ? 6 : 9;
+                                    break;
+
+                                case 3:
+                                    _context.next = 5;
+                                    return _this.attachCanvas(props);
+
+                                case 5:
+                                    return _context.abrupt('break', 9);
+
+                                case 6:
+                                    _context.next = 8;
+                                    return _this.render();
+
+                                case 8:
+                                    return _context.abrupt('break', 9);
+
+                                case 9:
+
+                                    self.postMessage({ action: 'resolve' });
+
+                                case 10:
+                                case 'end':
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, _this);
+                }));
+
+                return function (_x) {
+                    return _ref.apply(this, arguments);
+                };
+            }();
+        }
+    }, {
+        key: '_preload',
+        value: function () {
+            var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
+                var imageBlob;
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.next = 2;
+                                return (0, _loadAsBlob2.default)('../src/images/example.png');
+
+                            case 2:
+                                imageBlob = _context2.sent;
+                                _context2.next = 5;
+                                return createImageBitmap(imageBlob);
+
+                            case 5:
+                                this.sourceImage = _context2.sent;
+
+                            case 6:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function _preload() {
+                return _ref3.apply(this, arguments);
             }
-          }
-        }, _callee2, this);
-      }));
 
-      function _preload() {
-        return _ref3.apply(this, arguments);
-      }
+            return _preload;
+        }()
+    }, {
+        key: 'attachCanvas',
+        value: function () {
+            var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(_ref5) {
+                var canvas = _ref5.canvas;
+                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                this.canvas = canvas;
+                                this.ctx = canvas.getContext('2d');
+                                _context3.next = 4;
+                                return this._preload();
 
-      return _preload;
-    }()
-  }, {
-    key: 'attachCanvas',
-    value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(_ref5) {
-        var canvas = _ref5.canvas;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                this.canvas = canvas;
-                this.ctx = canvas.getContext('2d');
-                _context3.next = 4;
-                return this._preload();
+                            case 4:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
 
-              case 4:
-              case 'end':
-                return _context3.stop();
+            function attachCanvas(_x2) {
+                return _ref4.apply(this, arguments);
             }
-          }
-        }, _callee3, this);
-      }));
 
-      function attachCanvas(_x2) {
-        return _ref4.apply(this, arguments);
-      }
+            return attachCanvas;
+        }()
+    }, {
+        key: 'render',
+        value: function () {
+            var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+                var ctx, sourceImage, _canvas, width, height, srcImageBuffer, imageBlurred, imageLowPass, destinate;
 
-      return attachCanvas;
-    }()
-  }, {
-    key: 'render',
-    value: function () {
-      var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
-        var ctx, sourceImage, _canvas, width, height, srcImageBuffer, imageBlurred, imageLowPass, destinate;
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                ctx = this.ctx, sourceImage = this.sourceImage, _canvas = this.canvas, width = _canvas.width, height = _canvas.height;
 
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                ctx = this.ctx, sourceImage = this.sourceImage, _canvas = this.canvas, width = _canvas.width, height = _canvas.height;
+                                ctx.clearRect(0, 0, width, height);
+                                ctx.drawImage(sourceImage, 0, 0);
 
-                ctx.clearRect(0, 0, width, height);
-                ctx.drawImage(sourceImage, 0, 0);
-
-                srcImageBuffer = ctx.getImageData(0, 0, width, height);
-                imageBlurred = (0, _blur2.default)(srcImageBuffer, 10);
-                imageLowPass = (0, _blur2.default)((0, _highpass2.default)(srcImageBuffer, 230), 80);
-                destinate = _canvasfilters2.default.screenBlend(_canvasfilters2.default.multiplyBlend(srcImageBuffer, imageBlurred), imageLowPass);
+                                srcImageBuffer = ctx.getImageData(0, 0, width, height);
+                                imageBlurred = (0, _blur2.default)(srcImageBuffer, 10);
+                                imageLowPass = (0, _blur2.default)((0, _highpass2.default)(srcImageBuffer, 230), 80);
+                                destinate = _canvasfilters2.default.screenBlend(_canvasfilters2.default.multiplyBlend(srcImageBuffer, imageBlurred), imageLowPass);
 
 
-                ctx.putImageData(new ImageData(destinate.data, destinate.width, destinate.height), 0, 0);
-                ctx.commit();
+                                ctx.putImageData(new ImageData(destinate.data, destinate.width, destinate.height), 0, 0);
+                                ctx.commit();
 
-              case 9:
-              case 'end':
-                return _context4.stop();
+                            case 9:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function render() {
+                return _ref6.apply(this, arguments);
             }
-          }
-        }, _callee4, this);
-      }));
 
-      function render() {
-        return _ref6.apply(this, arguments);
-      }
+            return render;
+        }()
+    }]);
 
-      return render;
-    }()
-  }]);
-
-  return WorkerProcess;
+    return WorkerProcess;
 }())();
 
 /***/ },

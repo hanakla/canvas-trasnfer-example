@@ -10675,14 +10675,6 @@ var FPSCounter = function () {
                 this.lastCountTime = now;
 
                 console.log('%dfps', this.fps);
-
-                if (this.logs.length >= 5 + 1) {
-                    var logs = this.logs.slice(1);
-                    console.log(logs, logs.reduce(function (m, value) {
-                        return m + value;
-                    }, 0) / logs.length);
-                    throw new Error('count stop');
-                }
             }
         }
     }]);
@@ -10777,7 +10769,11 @@ window.addEventListener('DOMContentLoaded', function () {
                           worker.addEventListener('message', function (_ref2) {
                             var data = _ref2.data;
 
-                            data.action === 'resolve' && resolve(data);
+                            if (data.action === 'resolve') {
+                              resolve(data);
+                            } else if (data.action === 'error') {
+                              alert(data.message);
+                            }
                           }, { once: true });
                         });
                       };

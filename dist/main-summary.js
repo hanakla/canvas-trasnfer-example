@@ -9212,14 +9212,6 @@ var FPSCounter = function () {
                 this.lastCountTime = now;
 
                 console.log('%dfps', this.fps);
-
-                if (this.logs.length >= 5 + 1) {
-                    var logs = this.logs.slice(1);
-                    console.log(logs, logs.reduce(function (m, value) {
-                        return m + value;
-                    }, 0) / logs.length);
-                    throw new Error('count stop');
-                }
             }
         }
     }]);
@@ -9245,88 +9237,86 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 window.addEventListener('DOMContentLoaded', function () {
-  var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(e) {
-    var worker, waitResponse, dest, offscreen, counter, render;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            worker = new Worker('./dist/worker-summary.js');
+    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(e) {
+        var worker, waitResponse, dest, offscreen, counter, render;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        worker = new Worker('./dist/worker-summary.js');
 
-            // Workerの処理完了を待つためのヘルパ
+                        // Workerの処理完了を待つためのヘルパ
 
-            waitResponse = function waitResponse() {
-              return new Promise(function (resolve) {
-                worker.addEventListener('message', function (_ref2) {
-                  var data = _ref2.data;
+                        waitResponse = function waitResponse() {
+                            return new Promise(function (resolve) {
+                                worker.addEventListener('message', function (_ref2) {
+                                    var data = _ref2.data;
 
-                  if (data && data.action === 'resolve') {
-                    resolve(data);
-                  }
-                }, { once: true });
-              });
-            };
+                                    data.action === 'resolve' && resolve(data);
+                                }, { once: true });
+                            });
+                        };
 
-            dest = document.createElement('canvas');
+                        dest = document.createElement('canvas');
 
-            dest.width = 640;
-            dest.height = 360;
-            document.body.appendChild(dest);
+                        dest.width = 640;
+                        dest.height = 360;
+                        document.body.appendChild(dest);
 
-            // canvas要素からOffscreenCanvasを生成して、Workerスレッドへ転送する
-            offscreen = dest.transferControlToOffscreen();
+                        // canvas要素からOffscreenCanvasを生成して、Workerスレッドへ転送する
+                        offscreen = dest.transferControlToOffscreen();
 
-            worker.postMessage({ action: 'attachCanvas', canvas: offscreen }, [offscreen]);
-            _context2.next = 10;
-            return waitResponse();
-
-          case 10:
-            counter = new _fpsCounter2.default();
-
-            render = function () {
-              var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-                return regeneratorRuntime.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        counter.count();
-
-                        // Workerへレンダリングを要求して、レンダリングの終わりを待つ
-                        worker.postMessage({ action: 'render' });
-                        _context.next = 4;
+                        worker.postMessage({ action: 'attachCanvas', canvas: offscreen }, [offscreen]);
+                        _context2.next = 10;
                         return waitResponse();
 
-                      case 4:
+                    case 10:
+                        counter = new _fpsCounter2.default();
 
-                        // 次のフレームをレンダリング
+                        render = function () {
+                            var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+                                return regeneratorRuntime.wrap(function _callee$(_context) {
+                                    while (1) {
+                                        switch (_context.prev = _context.next) {
+                                            case 0:
+                                                counter.count();
+
+                                                // Workerへレンダリングを要求して、レンダリングの終わりを待つ
+                                                worker.postMessage({ action: 'render' });
+                                                _context.next = 4;
+                                                return waitResponse();
+
+                                            case 4:
+
+                                                // 次のフレームをレンダリング
+                                                requestAnimationFrame(render);
+
+                                            case 5:
+                                            case 'end':
+                                                return _context.stop();
+                                        }
+                                    }
+                                }, _callee, undefined);
+                            }));
+
+                            return function render() {
+                                return _ref3.apply(this, arguments);
+                            };
+                        }();
+
                         requestAnimationFrame(render);
 
-                      case 5:
-                      case 'end':
-                        return _context.stop();
-                    }
-                  }
-                }, _callee, undefined);
-              }));
+                    case 13:
+                    case 'end':
+                        return _context2.stop();
+                }
+            }
+        }, _callee2, undefined);
+    }));
 
-              return function render() {
-                return _ref3.apply(this, arguments);
-              };
-            }();
-
-            requestAnimationFrame(render);
-
-          case 13:
-          case 'end':
-            return _context2.stop();
-        }
-      }
-    }, _callee2, undefined);
-  }));
-
-  return function (_x) {
-    return _ref.apply(this, arguments);
-  };
+    return function (_x) {
+        return _ref.apply(this, arguments);
+    };
 }());
 
 /***/ },
